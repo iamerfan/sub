@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 app.get("/", async (req, res) => {
   const url = req.query.url;
   try {
-    const link1 = `https://iamerfan.ir/${url}/auto`;
-    const link2 = `https://nl.iamerfan2.ir/${url}/auto`;
+    const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
+    const link2 = `https://nl.iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
     if (!url) {
       return res.status(400).send("Subscription URL parameter is missing");
     }
