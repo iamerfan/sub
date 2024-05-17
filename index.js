@@ -5,8 +5,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Endpoint to fetch V2Ray subscription link
-app.get("/", async (req, res) => {
-  const url = req.query.url;
+app.get("/:url", async (req, res) => {
+  const url = req.params.url;
   try {
     const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
     const link2 = `https://nl.iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
