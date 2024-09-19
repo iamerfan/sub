@@ -15,9 +15,13 @@ app.get("/:url", async (req, res) => {
     }
 
     // Make requests to both links concurrently
-    const [response1] = await axios.all([axios.get(link1)]);
+    const [response1, response2] = await axios.all([
+      axios.get(link1),
+      axios.get(link2),
+    ]);
     const data1 = response1.data;
-    const mixedData = `${data1}`;
+    const data2 = response2.data;
+    const mixedData = `${data1}\n${data2}`;
 
     res.send(mixedData);
   } catch (error) {
