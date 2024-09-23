@@ -49,58 +49,19 @@ app.get("/:url", async (req, res) => {
 });
 app.get("/sub/:url", async (req, res) => {
   const url = req.params.url;
+
+  if (!url) {
+    return res.status(400).send("Subscription URL parameter is missing");
+  }
+
   try {
     const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/singbox`;
-    const link2 = `https://tr.iamerfan.ir:2054/json/${url}`;
-    if (!url) {
-      return res.status(400).send("Subscription URL parameter is missing");
-    }
-
-    // Fetch data from the first iamerfan link
     const response1 = await axios.get(link1);
-    let iamerfanObj = response1.data;
+    const iamerfanObj = response1.data;
 
-    // Filter out servers with "nl.iamerfan.ir" or "nl.iamerfan2.ir"
-    if (iamerfanObj.outbounds) {
-      iamerfanObj.outbounds = iamerfanObj.outbounds.filter(
-        (server) =>
-          server.server !== "nl.iamerfan.ir" &&
-          server.server !== "nl.iamerfan2.ir"
-      );
-    } else {
-      iamerfanObj.outbounds = [];
-    }
-
-    // Define the servers
+    // Define the new servers
     const trServer1 = {
-      tag: "🇹🇷 | Mci - Wifi 1",
-      type: "vless",
-      server: "tr.iamerfan.ir",
-      server_port: 80,
-      uuid: url.toString(),
-      tls: {
-        enabled: false,
-        server_name: "tr.iamerfan.ir",
-        utls: {
-          enabled: false,
-          fingerprint: "",
-        },
-        insecure: true,
-        alpn: [],
-      },
-      packet_encoding: "xudp",
-      transport: {
-        type: "ws",
-        path: "/SxRCMb5XHHDtjBbeavohSEQAcZA",
-        early_data_header_name: "Sec-WebSocket-Protocol",
-        headers: {
-          Host: "tr.iamerfan.ir",
-        },
-      },
-    };
-
-    const trServer2 = {
-      tag: "🇹🇷 | Mci - Wifi 2",
+      tag: "🇹🇷 MCI - Wifi 1",
       type: "vless",
       server: "tr.iamerfan.ir",
       server_port: 443,
@@ -126,7 +87,34 @@ app.get("/sub/:url", async (req, res) => {
       },
     };
 
-    // Add the new servers to the filtered outbounds array
+    const trServer2 = {
+      tag: "🇹🇷 MCI - Wifi 2",
+      type: "vless",
+      server: "tr.iamerfan.ir",
+      server_port: 80,
+      uuid: url.toString(),
+      tls: {
+        enabled: false,
+        server_name: "tr.iamerfan.ir",
+        utls: {
+          enabled: false,
+          fingerprint: "",
+        },
+        insecure: true,
+        alpn: [],
+      },
+      packet_encoding: "xudp",
+      transport: {
+        type: "ws",
+        path: "/SxRCMb5XHHDtjBbeavohSEQAcZA",
+        early_data_header_name: "Sec-WebSocket-Protocol",
+        headers: {
+          Host: "tr.iamerfan.ir",
+        },
+      },
+    };
+
+    // Add new servers to the outbounds array
     iamerfanObj.outbounds.push(trServer1, trServer2);
 
     // Send the modified iamerfanObj
