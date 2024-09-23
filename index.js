@@ -61,35 +61,9 @@ app.get("/sub/:url", async (req, res) => {
     const iamerfanObj = response1.data;
 
     // Define the servers
-    const trServer1 = {
-      tag: "🇹🇷 tls WS direct vless § 443 14",
-      type: "vless",
-      server: "tr.iamerfan.ir",
-      server_port: 443,
-      uuid: url.toString(),
-      tls: {
-        enabled: true,
-        server_name: "tr.iamerfan.ir",
-        utls: {
-          enabled: true,
-          fingerprint: "chrome",
-        },
-        insecure: false,
-        alpn: ["http/1.1"],
-      },
-      packet_encoding: "xudp",
-      transport: {
-        type: "ws",
-        path: "/SxRCMb5XHHDtjBbeavohSEQAcZA",
-        early_data_header_name: "Sec-WebSocket-Protocol",
-        headers: {
-          Host: "tr.iamerfan.ir",
-        },
-      },
-    };
 
-    const trServer2 = {
-      tag: "🇹🇷 ws direct vless § 80 14",
+    const trServer1 = {
+      tag: "🇹🇷 | Mci - Wifi 1-erfan",
       type: "vless",
       server: "tr.iamerfan.ir",
       server_port: 80,
@@ -114,7 +88,32 @@ app.get("/sub/:url", async (req, res) => {
         },
       },
     };
-
+    const trServer2 = {
+      tag: "🇹🇷 | Mci - Wifi 2-erfan-backup",
+      type: "vless",
+      server: "tr.iamerfan.ir",
+      server_port: 443,
+      uuid: url.toString(),
+      tls: {
+        enabled: true,
+        server_name: "tr.iamerfan.ir",
+        utls: {
+          enabled: true,
+          fingerprint: "chrome",
+        },
+        insecure: false,
+        alpn: ["http/1.1"],
+      },
+      packet_encoding: "xudp",
+      transport: {
+        type: "ws",
+        path: "/SxRCMb5XHHDtjBbeavohSEQAcZA",
+        early_data_header_name: "Sec-WebSocket-Protocol",
+        headers: {
+          Host: "tr.iamerfan.ir",
+        },
+      },
+    };
     // Add servers to outbounds array
     iamerfanObj.outbounds.push(trServer1, trServer2);
 
