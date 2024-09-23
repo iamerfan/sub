@@ -73,7 +73,7 @@ app.get("/sub/:url", async (req, res) => {
 
     // Define the servers
     const trServer1 = {
-      tag: "🇹🇷 | Mci - Wifi 1-erfan",
+      tag: "🇹🇷 | ترکیه - همراه اول و وایفای",
       type: "vless",
       server: "tr.iamerfan.ir",
       server_port: 80,
@@ -100,7 +100,7 @@ app.get("/sub/:url", async (req, res) => {
     };
 
     const trServer2 = {
-      tag: "🇹🇷 | Mci - Wifi 2-erfan-backup",
+      tag: "🇹🇷 | ترکیه - همراه اول و وایفای",
       type: "vless",
       server: "tr.iamerfan.ir",
       server_port: 443,
