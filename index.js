@@ -58,10 +58,20 @@ app.get("/sub/:url", async (req, res) => {
 
     // Fetch data from the first iamerfan link
     const response1 = await axios.get(link1);
-    const iamerfanObj = response1.data;
+    let iamerfanObj = response1.data;
+
+    // Filter out servers with "nl.iamerfan.ir" or "nl.iamerfan2.ir"
+    if (iamerfanObj.outbounds) {
+      iamerfanObj.outbounds = iamerfanObj.outbounds.filter(
+        (server) =>
+          server.server !== "nl.iamerfan.ir" &&
+          server.server !== "nl.iamerfan2.ir"
+      );
+    } else {
+      iamerfanObj.outbounds = [];
+    }
 
     // Define the servers
-
     const trServer1 = {
       tag: "🇹🇷 | Mci - Wifi 1-erfan",
       type: "vless",
@@ -88,6 +98,7 @@ app.get("/sub/:url", async (req, res) => {
         },
       },
     };
+
     const trServer2 = {
       tag: "🇹🇷 | Mci - Wifi 2-erfan-backup",
       type: "vless",
@@ -114,7 +125,8 @@ app.get("/sub/:url", async (req, res) => {
         },
       },
     };
-    // Add servers to outbounds array
+
+    // Add the new servers to the filtered outbounds array
     iamerfanObj.outbounds.push(trServer1, trServer2);
 
     // Send the modified iamerfanObj
