@@ -4,39 +4,44 @@ const axios = require("axios");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Endpoint to fetch V2Ray subscription link
+// Utility function to filter unwanted configurations
+function filterConfigs(data, unwantedDomains) {
+  return data
+    .split("\n")
+    .filter(
+      (config) => !unwantedDomains.some((domain) => config.includes(domain))
+    )
+    .join("\n");
+}
+
+// Endpoint to fetch and process V2Ray subscriptions
 app.get("/:url", async (req, res) => {
   const url = req.params.url;
+  if (!url) {
+    return res.status(400).send("Subscription URL parameter is missing");
+  }
+
   try {
     const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
-    if (!url) {
-      return res.status(400).send("Subscription URL parameter is missing");
-    }
+    const link2 = `https://tr.iamerfan.ir:2054/sub/${url}`;
 
-    // Only make a request to the iamerfan link
+    // Fetch data from link1
     const response1 = await axios.get(link1);
-    const data1 = response1.data;
+    let data1 = response1.data;
 
-    res.send(data1);
-  } catch (error) {
-    console.error("Error fetching V2Ray subscription:", error.message);
-    res.status(500).send("Internal Server Error");
-  }
-});
+    // Fetch data from link2
+    const response2 = await axios.get(link2);
+    const data2 = response2.data;
 
-app.get("/sub/:url", async (req, res) => {
-  const url = req.params.url;
-  try {
-    const iamerfan = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/singbox`;
-    if (!url) {
-      return res.status(400).send("Subscription URL parameter is missing");
-    }
+    // Remove unwanted configurations
+    const unwantedDomains = ["nl.iamerfan.ir", "nl.iamerfan2.ir"];
+    data1 = filterConfigs(data1, unwantedDomains);
 
-    // Only make a request to the iamerfan link
-    const response1 = await axios.get(iamerfan);
-    const iamerfanObj = response1.data;
+    // Combine the filtered data1 with data2
+    const result = `${data1}\n${data2}`;
 
-    res.send(iamerfanObj);
+    // Send the final result
+    res.send(result);
   } catch (error) {
     console.error("Error fetching V2Ray subscription:", error.message);
     res.status(500).send("Internal Server Error");
