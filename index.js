@@ -21,7 +21,7 @@ app.get("/:url", async (req, res) => {
   }
 
   const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
-  const link2 = `https://tr.iamerfan.ir:2054/sub/${url}`;
+  const link2 = `https://tr.iamerfan.ir:2054/subscrption/${url}`;
 
   try {
     // Make both requests simultaneously using Promise.all
