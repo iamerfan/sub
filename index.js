@@ -61,7 +61,7 @@ app.get("/sub/:url", async (req, res) => {
 
     // Define the new servers
     const trServer1 = {
-      tag: "🇹🇷 MCI - Wifi 1",
+      tag: "🇹🇷 MCI - Wifi 1 § 443 16",
       type: "vless",
       server: "tr.iamerfan.ir",
       server_port: 443,
@@ -88,7 +88,7 @@ app.get("/sub/:url", async (req, res) => {
     };
 
     const trServer2 = {
-      tag: "🇹🇷 MCI - Wifi 2",
+      tag: "🇹🇷 MCI - Wifi 2 § 443 14",
       type: "vless",
       server: "tr.iamerfan.ir",
       server_port: 80,
@@ -116,7 +116,19 @@ app.get("/sub/:url", async (req, res) => {
 
     // Add new servers to the outbounds array
     iamerfanObj.outbounds.push(trServer1, trServer2);
-
+    iamerfanObj.outbounds[0].outbounds.push(trServer1.tag, trServer2.tag);
+    iamerfanObj.outbounds[0].outbounds =
+      iamerfanObj.outbounds[0].outbounds.filter(
+        (server) =>
+          server !== "🇹🇷 Server 2 § 443 14" &&
+          server !== "🇹🇷 Server1 § 80 14" &&
+          server !== "🇹🇷 Backup Server § 443 16"
+      );
+    // iamerfanObj.outbounds = iamerfanObj.outbounds.filter(
+    //   (config) =>
+    //     config.server !== "nl.iamerfan.ir" &&
+    //     config.server !== "nl.iamerfan2.ir"
+    // );
     // Send the modified iamerfanObj
     res.send(iamerfanObj);
   } catch (error) {
