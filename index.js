@@ -22,6 +22,8 @@ app.get("/:url", async (req, res) => {
 
   const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
   const link2 = `https://tr.iamerfan.ir:2054/subscrption/${url}`;
+  const bpb =
+    "vless://89b3cbba-e6ac-485a-9481-976a0415eab9@free.iamerfan.ir:443?encryption=none&security=tls&sni=freE.IameRFAn.IR&alpn=h2%2Chttp%2F1.1&fp=randomized&type=ws&host=fRee.IamErFaN.iR&path=%2FHyfp8xkYsyYSSSKR%3Fed%3D2560#☁️ Cloudflare Server";
 
   try {
     // Make both requests simultaneously using Promise.all
@@ -38,7 +40,7 @@ app.get("/:url", async (req, res) => {
     data1 = filterConfigs(data1, unwantedDomains);
 
     // Combine the filtered data1 with data2
-    const result = `${data1}\n${data2}`;
+    const result = `${data1}\n${data2}\n${bpb}`;
 
     // Send the final result
     res.send(result);
@@ -113,11 +115,47 @@ app.get("/sub/:url", async (req, res) => {
         },
       },
     };
+    const bpbServer1 = {
+      type: "vless",
+      server: "free.iamerfan.ir",
+      server_port: 443,
+      uuid: "89b3cbba-e6ac-485a-9481-976a0415eab9",
+      domain_strategy: "prefer_ipv6",
+      packet_encoding: "",
+      tls: {
+        alpn: ["http/1.1"],
+        enabled: true,
+        insecure: false,
+        server_name: "fREe.IAmerfAN.IR",
+        utls: {
+          enabled: true,
+          fingerprint: "randomized",
+        },
+      },
+      transport: {
+        early_data_header_name: "Sec-WebSocket-Protocol",
+        max_early_data: 2560,
+        headers: {
+          Host: "FreE.IaMeRfAn.IR",
+        },
+        path: "/qP6znQLdDJDnFPQK",
+        type: "ws",
+      },
+      tag: "☁️ Cloudflare Server",
+    };
 
     // Add new servers to the outbounds array
-    iamerfanObj.outbounds.push(trServer1, trServer2);
-    iamerfanObj.outbounds[0].outbounds.push(trServer1.tag, trServer2.tag);
-    iamerfanObj.outbounds[1].outbounds.push(trServer1.tag, trServer2.tag);
+    iamerfanObj.outbounds.push(trServer1, trServer2, bpbServer1);
+    iamerfanObj.outbounds[0].outbounds.push(
+      trServer1.tag,
+      trServer2.tag,
+      bpbServer1.tag
+    );
+    iamerfanObj.outbounds[1].outbounds.push(
+      trServer1.tag,
+      trServer2.tag,
+      bpbServer1.tag
+    );
     iamerfanObj.outbounds[0].outbounds =
       iamerfanObj.outbounds[0].outbounds.filter(
         (server) =>
