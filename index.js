@@ -125,11 +125,19 @@ app.get("/sub/:url", async (req, res) => {
           server !== "🇹🇷 Server1 § 80 14" &&
           server !== "🇹🇷 Backup Server § 443 16"
       );
-    // iamerfanObj.outbounds = iamerfanObj.outbounds.filter(
-    //   (config) =>
-    //     config.server !== "nl.iamerfan.ir" &&
-    //     config.server !== "nl.iamerfan2.ir"
-    // );
+    iamerfanObj.outbounds[1].outbounds =
+      iamerfanObj.outbounds[1].outbounds.filter(
+        (server) =>
+          server !== "🇹🇷 Server 2 § 443 14" &&
+          server !== "🇹🇷 Server1 § 80 14" &&
+          server !== "🇹🇷 Backup Server § 443 16"
+      );
+    iamerfanObj.outbounds = iamerfanObj.outbounds.filter(
+      (config) =>
+        config.server !== "nl.iamerfan.ir" &&
+        config.server !== "nl.iamerfan2.ir"
+    );
+
     // Send the modified iamerfanObj
     res.send(iamerfanObj);
   } catch (error) {
