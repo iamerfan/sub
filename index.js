@@ -117,6 +117,7 @@ app.get("/sub/:url", async (req, res) => {
     // Add new servers to the outbounds array
     iamerfanObj.outbounds.push(trServer1, trServer2);
     iamerfanObj.outbounds[0].outbounds.push(trServer1.tag, trServer2.tag);
+    iamerfanObj.outbounds[1].outbounds.push(trServer1.tag, trServer2.tag);
     iamerfanObj.outbounds[0].outbounds =
       iamerfanObj.outbounds[0].outbounds.filter(
         (server) =>
