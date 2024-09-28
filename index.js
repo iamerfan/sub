@@ -89,32 +89,6 @@ app.get("/sub/:url", async (req, res) => {
       },
     };
 
-    const trServer2 = {
-      tag: "🇹🇷 MCI - Wifi 2 § 443 14",
-      type: "vless",
-      server: "tr.iamerfan.ir",
-      server_port: 80,
-      uuid: url.toString(),
-      tls: {
-        enabled: false,
-        server_name: "tr.iamerfan.ir",
-        utls: {
-          enabled: false,
-          fingerprint: "",
-        },
-        insecure: true,
-        alpn: [],
-      },
-      packet_encoding: "xudp",
-      transport: {
-        type: "ws",
-        path: "/SxRCMb5XHHDtjBbeavohSEQAcZA",
-        early_data_header_name: "Sec-WebSocket-Protocol",
-        headers: {
-          Host: "tr.iamerfan.ir",
-        },
-      },
-    };
     const bpbServer1 = {
       type: "vless",
       server: "free.iamerfan.ir",
@@ -145,17 +119,9 @@ app.get("/sub/:url", async (req, res) => {
     };
 
     // Add new servers to the outbounds array
-    iamerfanObj.outbounds.push(trServer1, trServer2, bpbServer1);
-    iamerfanObj.outbounds[0].outbounds.push(
-      trServer1.tag,
-      trServer2.tag,
-      bpbServer1.tag
-    );
-    iamerfanObj.outbounds[1].outbounds.push(
-      trServer1.tag,
-      trServer2.tag,
-      bpbServer1.tag
-    );
+    iamerfanObj.outbounds.push(trServer1, bpbServer1);
+    iamerfanObj.outbounds[0].outbounds.push(trServer1.tag, bpbServer1.tag);
+    iamerfanObj.outbounds[1].outbounds.push(trServer1.tag, bpbServer1.tag);
     iamerfanObj.outbounds[0].outbounds =
       iamerfanObj.outbounds[0].outbounds.filter(
         (server) =>
