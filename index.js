@@ -59,9 +59,18 @@ app.get("/:url", async (req, res) => {
   if (!url) {
     return res.status(400).send("Subscription URL parameter is missing");
   }
-
+  function filterConfigs(data, unwantedDomains) {
+    return data
+      .split("\n")
+      .filter(
+        (config) => !unwantedDomains.some((domain) => config.includes(domain))
+      )
+      .join("\n");
+  }
   try {
-    const bpbServers =
+    const turkey =
+      "vless://98ce3e32-03bf-4861-bfab-90e8c4d1a461@tr.iamerfan.ir:443?hiddify=1&sni=tr.iamerfan.ir&type=ws&alpn=http/1.1&path=/SxRCMb5XHHDtjBbeavohSEQAcZA&host=tr.iamerfan.ir&encryption=none&fp=chrome&headerType=None&security=tls#%F0%9F%87%B9%F0%9F%87%B7%20%7C%20Mci%20-%20Wifi";
+    const bpb =
       "vless://89b3cbba-e6ac-485a-9481-976a0415eab9@free.iamerfan.ir:443?encryption=none&security=tls&sni=freE.IameRFAn.IR&alpn=h2%2Chttp%2F1.1&fp=randomized&type=ws&host=fRee.IamErFaN.iR&path=%2FHyfp8xkYsyYSSSKR%3Fed%3D2560#☁️ Cloudflare Server";
     const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
     const link2 = `https://tr.iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
@@ -72,8 +81,11 @@ app.get("/:url", async (req, res) => {
     const data1 = response1.data;
     const data2 = response2.data;
 
+    // Remove unwanted configurations
+    const unwantedDomains = ["nl.iamerfan.ir", "nl.iamerfan2.ir"];
+    data1 = filterConfigs(data1, unwantedDomains);
     // Combine the main link data with the bpb server links
-    const mixedData = `${data1}\n${data2}\n${bpbServers}`;
+    const mixedData = `${data1}\n${turkey}\n${bpb}`;
 
     res.send(mixedData);
   } catch (error) {
