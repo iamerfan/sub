@@ -68,7 +68,7 @@ app.get("/:url", async (req, res) => {
 
     // Fetch the main link
     const response1 = await axios.get(link1);
-    const response2 = await axios.get(link1);
+    const response2 = await axios.get(link2);
     const data1 = response1.data;
     const data2 = response2.data;
 
