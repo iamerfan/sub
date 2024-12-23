@@ -17,11 +17,13 @@ app.get("/:url", async (req, res) => {
     // Fetch the main link
     const response1 = await axios.get(link1);
     const data1 = response1.data;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store"); // Avoid caching issues
 
-    res.send(data1);
+    return res.send(data1);
   } catch (error) {
     console.error("Error fetching V2Ray subscription:", error.message);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).send("Internal Server Error");
   }
 });
 
