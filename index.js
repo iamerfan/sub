@@ -5,21 +5,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Endpoint to fetch V2Ray subscription link
-app.get("/*", async (req, res) => {
-  const path = req.params[0];
-
-  // Construct the full URL
-  const url = `https://iamerfan.ir/${path}`;
+app.get("/:url", async (req, res) => {
+  const url = req.params.url;
   if (!url) {
     return res.status(400).send("Subscription URL parameter is missing");
   }
 
   try {
-    const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${path}/auto`;
+    const link1 = `https://iamerfan.ir/h8fK6YW30DpswBcb9IqMmIU/${url}/auto`;
 
     // Fetch the main link
     const response1 = await axios.get(link1);
-    let data1 = response1.data;
+    const data1 = response1.data;
 
     res.send(data1);
   } catch (error) {
